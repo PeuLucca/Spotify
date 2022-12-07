@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letra de Música</title>
+</head>
+<body onload="showLetra()">
+	<div style='width:500px'>
+		<div id='letra' style='width:400px;text-align:left'>
+            <h2 id="titulo">Titulo...</h2>
+			<pre id="texto-exibido" class=text>Fetching lyrics...</pre>
+		</div>
+	</div>
+	<script>
+		fetch("https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa&art=U2&mus=one")
+            .then((response) => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                throw new Error("NETWORK RESPONSE ERROR");
+                }
+            })
+            .then(data => {
+                exibirTela(data.mus[0]);
+                displayCocktail(data)
+            })
+            .catch((error) => console.error("FETCH ERROR:", error));
+
+        function exibirTela(data) {
+            document.getElementById('titulo').innerHTML = data.name
+            document.getElementById('texto-exibido').innerHTML = data.text
+        }
+	</script>
+</body>
+</html>
